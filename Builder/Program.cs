@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Builder
 {
@@ -7,22 +6,23 @@ namespace Builder
     {
         static void Main(string[] args)
         {
+            var _director = new Director(new ConcreteBuilder());
             
         }
     }
-    
-    class Director
+
+    internal class Director
     {
-        Builder builder;
+        private readonly Builder _builder;
         public Director(Builder builder)
         {
-            this.builder = builder;
+            _builder = builder;
         }
         public void Construct()
         {
-            builder.BuildPartA();
-            builder.BuildPartB();
-            builder.BuildPartC();
+            _builder.BuildPartA();
+            _builder.BuildPartB();
+            _builder.BuildPartC();
         }
     }
  
@@ -33,34 +33,34 @@ namespace Builder
         public abstract void BuildPartC();
         public abstract Product GetResult();
     }
- 
-    class Product
+
+    internal class Product
     {
-        List<object> parts = new List<object>();
+        private readonly List<object> _parts = new List<object>();
         public void Add(string part)
         {
-            parts.Add(part);
+            _parts.Add(part);
         }
     }
- 
-    class ConcreteBuilder : Builder
+
+    internal class ConcreteBuilder : Builder
     {
-        Product product = new Product();
+        private readonly Product _product = new Product();
         public override void BuildPartA()
         {
-            product.Add("Part A");
+            _product.Add("Part A");
         }
         public override void BuildPartB()
         {
-            product.Add("Part B");
+            _product.Add("Part B");
         }
         public override void BuildPartC()
         {
-            product.Add("Part C");
+            _product.Add("Part C");
         }
         public override Product GetResult()
         {
-            return product;
+            return _product;
         }
     }
 }
