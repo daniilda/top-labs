@@ -34,7 +34,7 @@ namespace Adapter
 
     internal class RoundStick
     {
-        public int Radius { get; init; }
+        public int Radius { get; }
 
         public RoundStick(int radius)
             => Radius = radius;

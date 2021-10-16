@@ -37,7 +37,6 @@ namespace Factory
         {
             return new MobButton();
         }
-        
     }
 
     class WebButton : IButton
@@ -67,6 +66,4 @@ namespace Factory
             Console.WriteLine("Окно отредерилось");
         }
     }
-    
-    
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Text;
 
 namespace Builder
 {
@@ -6,61 +7,94 @@ namespace Builder
     {
         static void Main(string[] args)
         {
-            var _director = new Director(new ConcreteBuilder());
-            
+            var baker = new Baker();
+            BreadBuilder builder = new RyeBreadBuilder();
+            var ryeBread = baker.Bake(builder);
+            Console.WriteLine(ryeBread.ToString());
+            builder = new WheatBreadBuilder();
+            var wheatBread = baker.Bake(builder);
+            Console.WriteLine(wheatBread.ToString());
+            Console.Read();
         }
     }
 
-    internal class Director
+    abstract class BreadBuilder
     {
-        private readonly Builder _builder;
-        public Director(Builder builder)
-        {
-            _builder = builder;
-        }
-        public void Construct()
-        {
-            _builder.BuildPartA();
-            _builder.BuildPartB();
-            _builder.BuildPartC();
-        }
-    }
- 
-    abstract class Builder
-    {
-        public abstract void BuildPartA();
-        public abstract void BuildPartB();
-        public abstract void BuildPartC();
-        public abstract Product GetResult();
+        public Bread Bread { get; private set; }
+
+        public void CreateBread()
+            => Bread = new Bread();
+
+        public abstract void SetFlour();
+        public abstract void SetSalt();
+        public abstract void SetAdditives();
     }
 
-    internal class Product
+    internal class Baker
     {
-        private readonly List<object> _parts = new List<object>();
-        public void Add(string part)
+        public Bread Bake(BreadBuilder breadBuilder)
         {
-            _parts.Add(part);
+            breadBuilder.CreateBread();
+            breadBuilder.SetFlour();
+            breadBuilder.SetSalt();
+            breadBuilder.SetAdditives();
+            return breadBuilder.Bread;
         }
     }
 
-    internal class ConcreteBuilder : Builder
+    internal class RyeBreadBuilder : BreadBuilder
     {
-        private readonly Product _product = new Product();
-        public override void BuildPartA()
+        public override void SetFlour()
+            => Bread.Flour = new Flour { Sort = "Ржаная мука 1 сорт" };
+
+        public override void SetSalt()
+            => Bread.Salt = new Salt();
+
+        public override void SetAdditives()
         {
-            _product.Add("Part A");
         }
-        public override void BuildPartB()
+    }
+
+    internal class WheatBreadBuilder : BreadBuilder
+    {
+        public override void SetFlour()
+            => Bread.Flour = new Flour { Sort = "Пшеничная мука высший сорт" };
+
+        public override void SetSalt()
+            => Bread.Salt = new Salt();
+
+        public override void SetAdditives()
+            => Bread.Additives = new Additives { Name = "улучшитель хлебопекарный" };
+    }
+
+    internal class Flour
+    { public string Sort { get; set; } }
+
+    internal class Salt
+    { }
+
+    internal class Additives
+    {
+        public string Name { get; set; }
+    }
+
+    class Bread
+    {
+        public Flour Flour { get; set; }
+        public Salt Salt { get; set; }
+        public Additives Additives { get; set; }
+
+        public override string ToString()
         {
-            _product.Add("Part B");
-        }
-        public override void BuildPartC()
-        {
-            _product.Add("Part C");
-        }
-        public override Product GetResult()
-        {
-            return _product;
+            var sb = new StringBuilder();
+
+            if (Flour != null)
+                sb.Append(Flour.Sort + "\n");
+            if (Salt != null)
+                sb.Append("Соль \n");
+            if (Additives != null)
+                sb.Append("Добавки: " + Additives.Name + " \n");
+            return sb.ToString();
         }
     }
 }

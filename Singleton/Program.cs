@@ -8,7 +8,11 @@ namespace Singleton
         {
             var b = Singleton.GetInstance();
             Console.WriteLine(b.Inc());
+            Console.WriteLine(b.Inc());
+            Console.WriteLine(b.Inc());
             var c = Singleton.GetInstance();
+            Console.WriteLine(c.Inc());
+            Console.WriteLine(b.Inc());
             Console.WriteLine(c.Inc());
         }
     }
@@ -19,13 +23,10 @@ namespace Singleton
 
         public static Singleton GetInstance()
         {
-            if (instance != null)
-            {
-                instance = new Singleton();
-                return instance;
-            }
-
+            if (instance != null) return instance;
+            instance = new Singleton();
             return instance;
+
         }
 
         private int a = 0;
