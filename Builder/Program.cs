@@ -18,7 +18,7 @@ namespace Builder
         }
     }
 
-    abstract class BreadBuilder
+    public abstract class BreadBuilder
     {
         public Bread Bread { get; private set; }
 
@@ -30,7 +30,7 @@ namespace Builder
         public abstract void SetAdditives();
     }
 
-    internal class Baker
+    public class Baker
     {
         public Bread Bake(BreadBuilder breadBuilder)
         {
@@ -42,7 +42,7 @@ namespace Builder
         }
     }
 
-    internal class RyeBreadBuilder : BreadBuilder
+    public class RyeBreadBuilder : BreadBuilder
     {
         public override void SetFlour()
             => Bread.Flour = new Flour { Sort = "Ржаная мука 1 сорт" };
@@ -55,7 +55,7 @@ namespace Builder
         }
     }
 
-    internal class WheatBreadBuilder : BreadBuilder
+    public class WheatBreadBuilder : BreadBuilder
     {
         public override void SetFlour()
             => Bread.Flour = new Flour { Sort = "Пшеничная мука высший сорт" };
@@ -67,18 +67,18 @@ namespace Builder
             => Bread.Additives = new Additives { Name = "улучшитель хлебопекарный" };
     }
 
-    internal class Flour
+    public class Flour
     { public string Sort { get; set; } }
 
-    internal class Salt
+    public class Salt
     { }
 
-    internal class Additives
+    public class Additives
     {
         public string Name { get; set; }
     }
 
-    class Bread
+    public class Bread
     {
         public Flour Flour { get; set; }
         public Salt Salt { get; set; }

@@ -6,23 +6,17 @@ namespace AbstractFactory
     {
         static void Main(string[] args)
         {
-            var a = new ClassicFactory();
-            var b = new Furniture(a);
-            b.Use();
-            var c = new ModernFactory();
-            var d = new Furniture(c);
-            d.Use();
         }
     }
 
-    abstract class AbstractFactory
+    public abstract class AbstractFactory
     {
         public abstract Chair CreateChair();
         public abstract Table CreateTable();
         public abstract Sofa CreateSofa();
     }
 
-    class ClassicFactory : AbstractFactory
+    public class ClassicFactory : AbstractFactory
     {
         public override ClChair CreateChair()
         {
@@ -40,7 +34,7 @@ namespace AbstractFactory
         }
     }
 
-    class ModernFactory : AbstractFactory
+    public class ModernFactory : AbstractFactory
     {
         public override Chair CreateChair()
         {
@@ -58,70 +52,70 @@ namespace AbstractFactory
         }
     }
 
-    abstract class Chair
+    public abstract class Chair
     {
-        public abstract void OnUse();
+        public abstract string OnUse();
     }
 
-    abstract class Table
+    public abstract class Table
     {
-        public abstract void OnUse();
+        public abstract string OnUse();
     }
 
-    abstract class Sofa
+    public abstract class Sofa
     {
-        public abstract void OnUse();
+        public abstract string OnUse();
     }
 
-    class ModChair : Chair
+    public class ModChair : Chair
     {
-        public override void OnUse()
+        public override string OnUse()
         {
-            Console.WriteLine("МодернСтул");
+            return "МодернСтул";
         }
     }
 
-    class ModTable : Table
+    public class ModTable : Table
     {
-        public override void OnUse()
+        public override string OnUse()
         {
-            Console.WriteLine("МодернСтол");
+            return "МодернСтол";
         }
     }
 
-    class ModSofa : Sofa
+    public class ModSofa : Sofa
     {
-        public override void OnUse()
+        public override string OnUse()
         {
-            Console.WriteLine("МодернДиван");
+            return "МодернДиван";
         }
     }
 
-    class ClChair : Chair
+    public class ClChair : Chair
     {
-        public override void OnUse()
+        public override string OnUse()
         {
-            Console.WriteLine("КлассикСтул");
+            return "КлассикСтул";
         }
     }
 
-    class ClTable : Table
+    public class ClTable : Table
     {
-        public override void OnUse()
+        public override string OnUse()
         {
-            Console.WriteLine("КлассикСтол");
+            return "КлассикСтол";
         }
     }
 
-    class ClSofa : Sofa
+    public class ClSofa : Sofa
     {
-        public override void OnUse()
+        public override string OnUse()
         {
-            Console.WriteLine("Классикдиван");
+           return "Классикдиван";
         }
     }
 
-    class Furniture
+    public class Furniture
     {
         private Chair _chair;
         private Table _table;
@@ -134,11 +128,13 @@ namespace AbstractFactory
             _sofa = factory.CreateSofa();
         }
 
-        public void Use()
+        public string[] Use()
         {
-            _chair.OnUse();
-            _table.OnUse();
-            _sofa.OnUse();
+            var usage = new string[3];
+            usage[0] = _chair.OnUse();
+            usage[1] = _table.OnUse();
+            usage[2] = _sofa.OnUse();
+            return usage;
         }
     }
 }

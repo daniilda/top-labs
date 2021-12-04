@@ -7,23 +7,23 @@ namespace Factory
         static void Main(string[] args)
         {
             var a = new WebWindow();
-            a.Render();
+            Console.WriteLine(a.Render());
             var b = new MobWindow();
-            b.Render();
+            Console.WriteLine(b.Render());
         }
     }
 
     interface IWindow
     {
-        void Render();
+        string Render();
     }
 
-    interface IButton
+    public interface IButton
     {
-        void Render();
+        string Render();
     }
 
-    class WebWindow : Window
+    public class WebWindow : Window
     {
         protected override IButton GetButton()
         {
@@ -31,7 +31,7 @@ namespace Factory
         }
     }
 
-    class MobWindow : Window
+    public class MobWindow : Window
     {
         protected override IButton GetButton()
         {
@@ -41,29 +41,28 @@ namespace Factory
 
     class WebButton : IButton
     {
-        public void Render()
+        public string Render()
         {
-            Console.WriteLine("Веб-кнопка отрендерелась");
+            return "Веб-кнопка отрендерелась";
         }
     }
 
     class MobButton : IButton
     {
-        public void Render()
+        public string Render()
         {
-            Console.WriteLine("Мобильная кнопка отрендерелась");
+            return "Мобильная кнопка отрендерелась";
         }
     }
 
-    abstract class Window : IWindow
+    public abstract class Window : IWindow
     {
         protected abstract IButton GetButton();
 
-        public void Render()
+        public string Render()
         {
             IButton button = GetButton();
-            button.Render();
-            Console.WriteLine("Окно отредерилось");
+            return "Окно отредерилось" + " " + button.Render();;
         }
     }
 }

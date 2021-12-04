@@ -13,18 +13,19 @@ namespace Bridge
                 Console.WriteLine("Tests with basic remote.");
                 var basicRemote = new BasicRemote(device);
                 basicRemote.Power();
-                device.PrintStatus();
+                Console.WriteLine(device.PrintStatus());
 
                 Console.WriteLine("Tests with advanced remote.");
                 var advancedRemote = new AdvanceRemote(device);
                 advancedRemote.Power();
+                advancedRemote.VolumeUp();
                 advancedRemote.Mute();
-                device.PrintStatus();
+                Console.WriteLine(device.PrintStatus());
             }
         }
     }
 
-    interface IDevice
+    public interface IDevice
     {
         public bool IsEnabled { get; }
         public int Volume { get; set; }
@@ -33,10 +34,10 @@ namespace Bridge
         public void Enable();
 
         public void Disable();
-        public void PrintStatus();
+        public string PrintStatus();
     }
-    
-    internal class Radio : IDevice
+
+    public class Radio : IDevice
     {
         private bool _isEnabled;
         public bool IsEnabled => _isEnabled;
@@ -61,18 +62,18 @@ namespace Bridge
         public void Disable()
             => _isEnabled = false;
 
-        public void PrintStatus()
+        public string PrintStatus()
         {
-            Console.WriteLine("------------------------------------");
-            Console.WriteLine("| I'm radio.");
-            Console.WriteLine("| I'm " + (_isEnabled ? "enabled" : "disabled"));
-            Console.WriteLine("| Current volume is " + _volume + "%");
-            Console.WriteLine("| Current channel is " + Channel);
-            Console.WriteLine("------------------------------------\n");
+            return "------------------------------------\n"
+                   + "| I'm radio. \n"
+                   + "| I'm " + (_isEnabled ? "enabled" : "disabled") + "\n"
+                   + "| Current volume is " + _volume + "%" + "\n"
+                   + "| Current channel is " + Channel + "\n"
+                   + "------------------------------------\n";
         }
     }
-    
-    internal class Tv : IDevice
+
+    public class Tv : IDevice
     {
         private bool _isEnabled;
         public bool IsEnabled => _isEnabled;
@@ -97,14 +98,14 @@ namespace Bridge
         public void Disable()
             => _isEnabled = false;
 
-        public void PrintStatus()
+        public string PrintStatus()
         {
-            Console.WriteLine("------------------------------------");
-            Console.WriteLine("| I'm a TV.");
-            Console.WriteLine("| I'm " + (_isEnabled ? "enabled" : "disabled"));
-            Console.WriteLine("| Current volume is " + _volume + "%");
-            Console.WriteLine("| Current channel is " + Channel);
-            Console.WriteLine("------------------------------------\n");
+            return "------------------------------------\n"
+                   + "| I'm TV. \n"
+                   + "| I'm " + (_isEnabled ? "enabled" : "disabled") + "\n"
+                   + "| Current volume is " + _volume + "%" + "\n"
+                   + "| Current channel is " + Channel + "\n"
+                   + "------------------------------------\n";
         }
     }
 
@@ -116,8 +117,8 @@ namespace Bridge
         void ChannelDown();
         void ChannelUp();
     }
-    
-    internal class BasicRemote : IRemote
+
+    public class BasicRemote : IRemote
     {
         protected IDevice _device;
         
@@ -135,7 +136,6 @@ namespace Bridge
 
         public void VolumeDown()
         {
-            Console.WriteLine("Remote: volume down");
             _device.Volume -= 10;
         }
 
@@ -158,7 +158,7 @@ namespace Bridge
         }
     }
 
-    internal class AdvanceRemote : BasicRemote
+    public class AdvanceRemote : BasicRemote
     {
         public AdvanceRemote(IDevice device) : base(device)
             => _device = device;

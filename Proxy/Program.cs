@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Proxy
@@ -10,17 +11,17 @@ namespace Proxy
         {
             var native = new YouTubeVideoDownloader(new ThpYoutubeApiClient());
             var smart = new YouTubeVideoDownloader(new CachedYoutubeApiClient());
-            
+
             Call(native);
             Call(smart);
-            
+
             void Call(YouTubeVideoDownloader downloader)
             {
-                downloader.RenderPopularVideosPage();
-                downloader.RenderVideoPage("123321");
-                downloader.RenderPopularVideosPage();
-                downloader.RenderVideoPage("123322");
-                downloader.RenderVideoPage("123321");
+                Console.WriteLine(downloader.RenderPopularVideosPage());
+                Console.WriteLine(downloader.RenderVideoPage("123321"));
+                Console.WriteLine(downloader.RenderPopularVideosPage());
+                Console.WriteLine(downloader.RenderVideoPage("123322"));
+                Console.WriteLine(downloader.RenderVideoPage("123321"));
             }
         }
     }
@@ -89,14 +90,14 @@ namespace Proxy
 
         public CachedYoutubeApiClient()
             => _api = new ThpYoutubeApiClient(); //let's imagine we have some fancy DI here
-        
+
         public Dictionary<string, Video> GetPopularVideos()
         {
             if (_cachePopular.Count == 0)
                 _cachePopular = _api.GetPopularVideos();
             else
                 Console.WriteLine("Fetching list from cache.");
-
+            
             return _cachePopular;
         }
 
@@ -107,7 +108,7 @@ namespace Proxy
                 Console.WriteLine("Fetching video from cache.");
                 return _cache[id];
             }
-            
+
             var result = _api.GetVideo(id);
             _cache.Add(id, result);
             return result;
@@ -135,30 +136,28 @@ namespace Proxy
         public YouTubeVideoDownloader(IYoutubeApiClient apiClient)
             => _apiClient = apiClient;
 
-        public void RenderVideoPage(string videoId)
+        public string RenderVideoPage(string videoId)
         {
             var video = _apiClient.GetVideo(videoId);
-            Console.WriteLine("--------------------------------");
-            Console.WriteLine("Video page");
-            Console.WriteLine("ID: " + video.Id);
-            Console.WriteLine("Title: " + video.Title);
-            Console.WriteLine("Data: " + video.Data);
-            Console.WriteLine("--------------------------------");
+            return "--------------------------------\n"
+            + "Video page\n"
+            + "ID: " + video.Id + "\n"
+            + "Title: " + video.Title +"\n"+ "Data: " + video.Data + "\n"
+            + "--------------------------------";
         }
 
-        public void RenderPopularVideosPage()
+        public string RenderPopularVideosPage()
         {
             var list = _apiClient.GetPopularVideos();
-            Console.WriteLine("---- Popular videos ----");
-            foreach (var (_,video) in list)
+            var result = "---- Popular videos ----\n";
+            foreach (var (key,video) in list)
             {
-                Console.WriteLine("--------------------------------");
-                Console.WriteLine("Video");
-                Console.WriteLine("ID: " + video.Id);
-                Console.WriteLine("Title: " + video.Title);
-                Console.WriteLine("--------------------------------");
+                result += "--------------------------------\n" + "Video\n" + "ID: " + video.Id +
+                          "\n" + "Title: " + video.Title + "\n" +
+                          "--------------------------------";
             }
-            
+
+            return result;
         }
     }
 }

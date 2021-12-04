@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Transactions;
+﻿using System.Collections.Generic;
 using ChainOfResponsibility.CheckStrategy.Abstractions;
 
 namespace ChainOfResponsibility.CheckStrategy

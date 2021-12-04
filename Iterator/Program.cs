@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Iterator
 {
@@ -14,14 +15,17 @@ namespace Iterator
 
     public class MenuReader
     {
-        public void SeeFoodItems(Menu menu)
+        public List<string> SeeFoodItems(Menu menu)
         {
             var iterator = menu.CreateNumerator();
+            var result = new List<string>();
             while (iterator.HasNext())
             {
                 var food = iterator.Next();
-                Console.WriteLine(food.Name);
+                result.Add(food.Name);
             }
+
+            return result;
         }
     }
 

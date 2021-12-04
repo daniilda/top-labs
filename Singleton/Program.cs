@@ -17,7 +17,7 @@ namespace Singleton
         }
     }
 
-    class Singleton
+    public class Singleton
     {
         private static Singleton instance;
 

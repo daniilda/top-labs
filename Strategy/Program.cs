@@ -8,22 +8,6 @@ namespace Strategy
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Добавляем правила");
-            var rules = new RuleAgent();
-            rules
-                .AddRule(new NotAdminRule())
-                .AddRule(new SomeRule());
-            Console.WriteLine("Создаем 'назначение' которое всречает правила");
-            var goodAssignment = new Assignment("Moderator", 39);
-            Console.WriteLine(rules.Approve(goodAssignment));
-            Console.WriteLine("Создаем 'назначение' которое не проходит по одному правилу");
-            var badAssignment = new Assignment("Admin", 12);
-            Console.WriteLine(rules.Approve(badAssignment));
-            Console.WriteLine("Создаем новый набор правил");
-            var newRules = new RuleAgent();
-            newRules
-                .AddRule(new SomeRule());
-            Console.WriteLine(newRules.Approve(badAssignment));
         }
     }
 
