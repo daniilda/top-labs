@@ -66,6 +66,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DatabaseFlow", "DatabaseFlo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseFlow.Tests", "DatabaseFlow\DatabaseFlow.Tests\DatabaseFlow.Tests.csproj", "{D970C5D2-D33B-40DC-83CA-BD94EB08AFAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseEntity", "DatabaseEntity\DatabaseEntity.csproj", "{33BB2907-FFA2-4C9B-A577-91C6863EAE01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -160,6 +162,10 @@ Global
 		{D970C5D2-D33B-40DC-83CA-BD94EB08AFAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D970C5D2-D33B-40DC-83CA-BD94EB08AFAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D970C5D2-D33B-40DC-83CA-BD94EB08AFAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33BB2907-FFA2-4C9B-A577-91C6863EAE01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33BB2907-FFA2-4C9B-A577-91C6863EAE01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33BB2907-FFA2-4C9B-A577-91C6863EAE01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33BB2907-FFA2-4C9B-A577-91C6863EAE01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9E628BAC-E235-47AB-A043-6936C28ED5CC} = {B4BD07B3-E2FE-4A3A-92B4-3DDD4AEDB968}

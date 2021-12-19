@@ -17,5 +17,8 @@ namespace DatabaseFlow.Tests
         {
             return new List<string> { "kek", "bek", "cheburek" };
         }
+
+        public static string GetTestString()
+            => "Meh";
     }
 }
